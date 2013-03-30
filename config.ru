@@ -1,0 +1,4 @@
+require './toronto'
+
+run Toronto
+

@@ -1,0 +1,25 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    nokogiri (1.5.9-java)
+    puma (1.6.3)
+      rack (~> 1.2)
+    puma (1.6.3-java)
+      rack (~> 1.2)
+    rack (1.5.2)
+    rack-protection (1.5.0)
+      rack
+    sinatra (1.4.2)
+      rack (~> 1.5, >= 1.5.2)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    tilt (1.3.6)
+
+PLATFORMS
+  java
+  ruby
+
+DEPENDENCIES
+  nokogiri
+  puma
+  sinatra
