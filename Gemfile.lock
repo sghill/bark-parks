@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    nokogiri (1.5.9)
     nokogiri (1.5.9-java)
     puma (1.6.3)
       rack (~> 1.2)
