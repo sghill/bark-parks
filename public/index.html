@@ -50,9 +50,9 @@
               parkInfoViewModel.content("Nothing found on Yelp! You could be the first!");
             } else {
               parkInfoViewModel.content([
-                "<h3>Yelp</h3>",
-                "<img src='", results.businesses[0].rating_img_url,"' />",
-                "<p>based on ", results.businesses[0].review_count, " reviews</p>"
+                "<p><a href='http://yelp.ca'><img src='http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png' /></a></p>",
+                "<img src='", results.businesses[0].rating_img_url_large,"' />",
+                "<p>", results.businesses[0].review_count, " reviews. <a target='_blank' href='" + results.businesses[0].mobile_url + "'>read reviews</a></p>"
               ].join(""));
             }
           }
