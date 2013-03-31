@@ -9,11 +9,16 @@
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
   <script type="text/javascript" src="/js/authorize.js"></script>
+  <style>
+    a {
+      color: rgb(0, 136, 204);
+    }
+  </style>
 </head>
 <body>
   <h1 style="text-align:center;font-family:sans-serif">Toronto's Off-Leash Bark Parks</h1>
 <div id="map" style="top:6%;width:99.5%;height:94%;position:absolute;z-index:-1"></div>
-<div id="parkInfo" style="top:6%;width:10%;height:30%;position:absolute;background-color:black;color:white;font-family:sans-serif;padding:10px">
+<div id="parkInfo" style="top:6%;width:10%;height:40%;position:absolute;background-color:black;color:white;font-family:sans-serif;padding:10px">
   <h2 data-bind="text: title"></h2>
   <h3 data-bind="text: address"></h3>
   <p data-bind="html: content"></h2>
