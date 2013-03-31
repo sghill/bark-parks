@@ -3,6 +3,7 @@ GEM
   specs:
     nokogiri (1.5.9)
     nokogiri (1.5.9-java)
+    oauth (0.4.7)
     puma (1.6.3)
       rack (~> 1.2)
     puma (1.6.3-java)
@@ -22,5 +23,6 @@ PLATFORMS
 
 DEPENDENCIES
   nokogiri
+  oauth
   puma
   sinatra

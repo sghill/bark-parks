@@ -7,18 +7,29 @@
   <script type="text/javascript" src="http://api.maps.nokia.com/2.2.4/jsl.js?with=all" charset="utf-8"></script>
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script>
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
   <script type="text/javascript" src="/js/authorize.js"></script>
 </head>
 <body>
   <h1 style="text-align:center;font-family:sans-serif">Toronto's Off-Leash Bark Parks</h1>
 <div id="map" style="top:6%;width:99.5%;height:94%;position:absolute;z-index:-1"></div>
+<div id="parkInfo" style="top:6%;width:10%;height:30%;position:absolute;background-color:black;color:white;font-family:sans-serif;padding:10px">
+  <h2 data-bind="text: title"></h2>
+  <h3 data-bind="text: address"></h3>
+  <p data-bind="html: content"></h2>
+</div>
 <script type="text/javascript">
-  var infoBubbles = new nokia.maps.map.component.InfoBubbles(),
-      eventType = nokia.maps.dom.Page.browser.touch ? "tap" : "click";
+  var parkInfoViewModel = {
+    title: ko.observable('click a marker'),
+    address: ko.observable(),
+    content: ko.observable('...for more information')
+  };
+  ko.applyBindings(parkInfoViewModel, document.getElementById("parkInfo"));
+  var eventType = nokia.maps.dom.Page.browser.touch ? "tap" : "click";
   var map = new nokia.maps.map.Display(document.getElementById('map'), {
     center: [43.670234, -79.386737],
     zoomLevel: 13,
-    components: [infoBubbles,
+    components: [
       new nokia.maps.map.component.ZoomBar(),
       new nokia.maps.map.component.Behavior()
     ]
@@ -27,12 +38,26 @@
     _.each(parks.locations, function(location) {
       var marker = new nokia.maps.map.StandardMarker([parseFloat(location.latitude), parseFloat(location.longitude)]);
       marker.addListener(eventType, function(e) {
-        var content = [
-          "<h2>",location.name,"</h2>",
-          "<p>",location.address," (",location.postalCode,")</p>"
-        ].join("");
-        infoBubbles.openBubble(content, marker.coordinate);
-      })
+        parkInfoViewModel.title(location.name);
+        parkInfoViewModel.address([location.address, " (", location.postalCode, ")"].join(""))
+        parkInfoViewModel.content("Yelp reviews loading...");
+        $.ajax({
+          type: "GET",
+          url: ["/parks/",location.id,"/ratings"].join(""),
+          dataType: "json",
+          success: function(results) {
+            if(_.isEmpty(results.businesses)) {
+              parkInfoViewModel.content("Nothing found on Yelp! You could be the first!");
+            } else {
+              parkInfoViewModel.content([
+                "<h3>Yelp</h3>",
+                "<img src='", results.businesses[0].rating_img_url,"' />",
+                "<p>based on ", results.businesses[0].review_count, " reviews</p>"
+              ].join(""));
+            }
+          }
+        });
+      });
       map.objects.add(marker);
     });
   });

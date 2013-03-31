@@ -21,6 +21,10 @@ class TorontoGateway
     end.uniq
   end
 
+  def find_park(park_id)
+    dog_parks.detect { |p| p.id == park_id }
+  end
+
   private
   def leash_free_areas
     @leash_free ||= @xml.xpath("//FacilityType[.='Leash-Free Area']")
