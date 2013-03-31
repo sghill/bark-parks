@@ -10,7 +10,7 @@
   <script type="text/javascript" src="/js/authorize.js"></script>
 </head>
 <body>
-  <h1 style="text-align:center;font-family:sans-serif">Toronto's Bark Parks</h1>
+  <h1 style="text-align:center;font-family:sans-serif">Toronto's Off-Leash Bark Parks</h1>
 <div id="map" style="top:6%;width:99.5%;height:94%;position:absolute;z-index:-1"></div>
 <script type="text/javascript">
   var infoBubbles = new nokia.maps.map.component.InfoBubbles(),
@@ -18,13 +18,19 @@
   var map = new nokia.maps.map.Display(document.getElementById('map'), {
     center: [43.670234, -79.386737],
     zoomLevel: 13,
-    components: [infoBubbles]
+    components: [infoBubbles,
+      new nokia.maps.map.component.ZoomBar(),
+      new nokia.maps.map.component.Behavior()
+    ]
   });
   $.getJSON("/parks", function(parks) {
     _.each(parks.locations, function(location) {
       var marker = new nokia.maps.map.StandardMarker([parseFloat(location.latitude), parseFloat(location.longitude)]);
       marker.addListener(eventType, function(e) {
-        var content = ["<h2>",location.name,"</h2>"].join("");
+        var content = [
+          "<h2>",location.name,"</h2>",
+          "<p>",location.address," (",location.postalCode,")</p>"
+        ].join("");
         infoBubbles.openBubble(content, marker.coordinate);
       })
       map.objects.add(marker);
