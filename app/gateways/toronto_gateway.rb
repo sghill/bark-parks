@@ -1,6 +1,6 @@
 require 'json'
 require 'nokogiri'
-require './model/park'
+require 'model/park'
 
 class TorontoGateway
   def initialize(xml, coordinates_mapping)
