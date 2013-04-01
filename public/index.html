@@ -39,7 +39,7 @@
       new nokia.maps.map.component.Behavior()
     ]
   });
-  $.getJSON("/parks", function(parks) {
+  $.getJSON("/api/parks", function(parks) {
     _.each(parks.locations, function(location) {
       var marker = new nokia.maps.map.StandardMarker([parseFloat(location.latitude), parseFloat(location.longitude)]);
       marker.addListener(eventType, function(e) {
@@ -48,7 +48,7 @@
         parkInfoViewModel.content("Yelp reviews loading...");
         $.ajax({
           type: "GET",
-          url: ["/parks/",location.id,"/ratings"].join(""),
+          url: ["/api/parks/",location.id,"/ratings"].join(""),
           dataType: "json",
           success: function(results) {
             if(_.isEmpty(results.businesses)) {
