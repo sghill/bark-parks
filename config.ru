@@ -5,7 +5,7 @@ require 'gateways/toronto_gateway'
 
 app = Rack::Builder.new do
   map "/" do
-    use Rack::Static, :root => 'public'
+    use Rack::Static, :urls => ["/css", "/js"], :root => "public"
     run Rack::File.new("public/index.html")
   end
 
