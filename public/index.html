@@ -69,11 +69,16 @@
             if(_.isEmpty(results.businesses)) {
               parkInfoViewModel.content("Nothing found on Yelp! You could be the first!");
             } else {
-              parkInfoViewModel.content([
-                "<p><a href='http://yelp.ca'><img src='http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png' /></a></p>",
-                "<img src='", results.businesses[0].rating_img_url_large,"' />",
-                "<p>", results.businesses[0].review_count, " reviews. <a target='_blank' href='" + results.businesses[0].mobile_url + "'>read reviews</a></p>"
-              ].join(""));
+              var content = ["<p><a href='http://yelp.ca'><img src='http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png' /></a></p>"];
+              function formatReview(business) {
+                return [
+                  "<h4>",business.name,"</h4>",
+                  "<img src='", business.rating_img_url_large,"' />",
+                  "<p>", business.review_count, " reviews. <a target='_blank' href='", business.mobile_url, "'>read reviews</a></p>"
+                ].join("");
+              }
+              var reviews = _.union(content, _.map(results.businesses, formatReview));
+              parkInfoViewModel.content(reviews.join(""));
             }
           }
         });
